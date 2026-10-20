@@ -25,7 +25,7 @@ SOURCE = ROOT / "assets" / "source" / "pigeon_mask_v2.obj"
 OUT_GLB = ROOT / "public" / "models" / "mask.glb"
 RENDERS = ROOT / "scripts" / "renders"
 
-TARGET_TRIS = 52_000
+TARGET_TRIS = 300_000
 WELD_DISTANCE = 1e-4
 TARGET_HEIGHT = 1.0
 

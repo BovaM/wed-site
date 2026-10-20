@@ -21,19 +21,6 @@ export const CONFIG = {
   },
 };
 
-/** Дословный текст с обратной стороны маски. */
-export const MASK_LINES = [
-  { text: '01.11', kind: 'date' },
-  { text: '15:00', kind: 'time' },
-  { text: 'ЗАГС #1', kind: 'place', place: 'zags' },
-  { text: '17:00', kind: 'time' },
-  { text: 'candy bar', kind: 'note' },
-  {
-    text: 'в особняке Василия Хлудова',
-    kind: 'place',
-    place: 'mansion',
-  },
-  { text: 'dress code: серый, please', kind: 'dresscode' },
-];
+
 
 

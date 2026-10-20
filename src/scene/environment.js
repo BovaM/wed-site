@@ -19,9 +19,13 @@ export function createEnvironment(renderer, scene) {
   const fill = new THREE.DirectionalLight(0xffffff, 0.24);
   fill.position.set(-3.4, -1.8, -2.8);
 
+  // Боковой свет для обратной стороны: мягко проявляет гравировку.
+  const rake = new THREE.DirectionalLight(0xfff0dd, 0);
+  rake.position.set(-4.8, 4.2, -3.2);
+
   const ambient = new THREE.HemisphereLight(0xfbf6ef, 0xb9bdc8, 0.28);
 
-  scene.add(key, rim, fill, ambient);
+  scene.add(key, rim, fill, rake, ambient);
 
   function dispose() {
     environment.dispose();
@@ -30,8 +34,9 @@ export function createEnvironment(renderer, scene) {
     key.dispose();
     rim.dispose();
     fill.dispose();
+    rake.dispose();
     ambient.dispose();
   }
 
-  return { key, rim, fill, ambient, dispose };
+  return { key, rim, fill, rake, ambient, dispose };
 }

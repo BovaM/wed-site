@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "build:mask": "blender --background --factory-startup --python scripts/build_mask.py",
-    "visual": "node scripts/visual-check.mjs"
+    "bake:engraving": "node scripts/bake-engraving.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0",

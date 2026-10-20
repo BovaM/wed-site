@@ -74,7 +74,7 @@ function updateInterface(progress) {
     caption.classList.toggle('is-visible', visible);
     if (p < 0.55) {
       captionIndex.textContent = '02';
-      captionText.textContent = 'оборот · фарфор';
+      captionText.textContent = 'оборот · рельеф';
     } else if (p < 0.8) {
       captionIndex.textContent = '03';
       captionText.textContent = 'точки · гравировка';
