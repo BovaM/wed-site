@@ -1,0 +1,34 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode-go/kimi-k3",
+  "small_model": "opencode-go/kimi-k3",
+  "agent": {
+    "build": {
+      "model": "opencode-go/deepseek-v4.1-flash"
+    },
+    "rutina": {
+      "description": "Рутина: scaffold, вёрстка нижнего блока, отсчёт, GitHub Actions, README. Не трогать сцену с маской.",
+      "mode": "subagent",
+      "model": "opencode-go/kimi-k3"
+    },
+    "fallback": {
+      "description": "Запасной сильный агент, если основной застрял на шейдерах или сцене",
+      "mode": "subagent",
+      "model": "opencode-go/qwen3.8-max"
+    }
+  },
+  "mcp": {
+    "servers": {
+      "playwright": {
+        "type": "local",
+        "command": ["npx", "-y", "@playwright/mcp@latest"],
+        "enabled": true
+      },
+      "context7": {
+        "type": "local",
+        "command": ["npx", "-y", "@upstash/context7-mcp"],
+        "enabled": true
+      }
+    }
+  }
+}

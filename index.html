@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f6f4f1" />
+    <meta name="color-scheme" content="light" />
+    <title>Мария &amp; Максим — 01.11.2026</title>
+    <meta
+      name="description"
+      content="Приглашение на свадьбу Марии и Максима. 1 ноября 2026 года, Москва. Фарфор, свет и два адреса."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Мария & Максим" />
+    <meta property="og:title" content="Мария & Максим — 01.11.2026" />
+    <meta
+      property="og:description"
+      content="Будем рады разделить этот день с вами. 1 ноября 2026, Москва."
+    />
+    <meta property="og:image" content="https://bovam.github.io/wed-site/img/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Фарфоровая маска-голубь и приглашение Марии и Максима" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="./img/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./src/styles/base.css" />
+    <link rel="stylesheet" href="./src/styles/sections.css" />
+    <script type="module" src="./src/main.js"></script>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <a class="skip-link mono" href="#invitation">К приглашению</a>
+
+    <div class="scene" id="scene">
+      <div class="scene__track" id="scene-track">
+        <section class="scene__stage" id="scene-stage" aria-label="Фарфоровая маска с приглашением">
+          <canvas class="scene__canvas" id="webgl" aria-hidden="true"></canvas>
+
+          <div class="scene__fallback" id="scene-fallback" aria-hidden="true">
+            <picture>
+              <source
+                media="(max-aspect-ratio: 4/5)"
+                srcset="./img/mask-fallback-mobile.webp"
+              />
+              <img
+                src="./img/mask-fallback.webp"
+                alt=""
+                width="1440"
+                height="900"
+              />
+            </picture>
+          </div>
+
+          <div class="scene__vignette" aria-hidden="true"></div>
+
+          <header class="scene__header">
+            <span class="mono">[ приглашение ]</span>
+            <span class="mono scene__header-date">[ 01.11.2026 ]</span>
+          </header>
+
+          <div class="scene__rail mono" aria-hidden="true">
+            <span>свадьба</span><span>·</span><span>москва</span><span>·</span><span>2026</span>
+          </div>
+
+          <div class="intro-copy" id="intro-copy">
+            <p class="intro-copy__kicker mono">[ фарфор · 2026 ]</p>
+            <h1 class="intro-copy__names">Мария <em>&amp;</em> Максим</h1>
+            <p class="intro-copy__date mono">01.11.2026 · 15:00 · москва</p>
+          </div>
+
+          <div class="scene__progress mono" aria-hidden="true">
+            <span id="scene-progress">00</span><span class="scene__progress-sep">/</span><span>100</span>
+          </div>
+
+          <div class="scroll-cue" id="scroll-cue" aria-hidden="true">
+            <span class="mono">прокрутите вниз</span>
+            <span class="scroll-cue__line"></span>
+          </div>
+
+          <div class="scene__caption mono" id="scene-caption" aria-hidden="true">
+            <span id="scene-caption-index">01</span>
+            <span id="scene-caption-text">маска · лицо</span>
+          </div>
+
+          <div class="scene__end mono" id="scene-end" aria-hidden="true">
+            <span>[ далее — детали ]</span><span class="scene__end-arrow">↓</span>
+          </div>
+
+          <div class="scene__fade" id="scene-fade" aria-hidden="true"></div>
+        </section>
+      </div>
+    </div>
+
+    <main class="content" id="invitation">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__top mono" data-reveal>
+          <span>[ 01.11.2026 ]</span>
+          <span>москва</span>
+          <span>[ 15:00 ]</span>
+        </div>
+
+        <h2 class="hero__title" id="hero-title" data-split="chars">Приглашение</h2>
+
+        <div class="hero__bottom">
+          <p class="hero__names" data-reveal>Мария <em>&amp;</em> Максим</p>
+          <p class="hero__invitation" data-reveal>
+            БУДЕМ РАДЫ РАЗДЕЛИТЬ ЭТОТ ДЕНЬ С ВАМИ
+          </p>
+        </div>
+
+        <span class="hero__index mono" aria-hidden="true">№ 01</span>
+      </section>
+
+      <section class="countdown-section" aria-labelledby="countdown-title">
+        <div class="rule" aria-hidden="true"></div>
+        <div class="countdown-section__head">
+          <h3 class="eyebrow mono" id="countdown-title" data-reveal>[ до встречи осталось ]</h3>
+          <p class="countdown-section__place mono" data-reveal>москва · 15:00</p>
+        </div>
+
+        <div class="countdown" id="countdown" data-reveal>
+          <div class="countdown__unit">
+            <span class="countdown__value" data-unit="days">00</span>
+            <span class="countdown__label mono">дни</span>
+          </div>
+          <div class="countdown__unit">
+            <span class="countdown__value" data-unit="hours">00</span>
+            <span class="countdown__label mono">часы</span>
+          </div>
+          <div class="countdown__unit">
+            <span class="countdown__value" data-unit="minutes">00</span>
+            <span class="countdown__label mono">минуты</span>
+          </div>
+          <div class="countdown__unit">
+            <span class="countdown__value" data-unit="seconds">00</span>
+            <span class="countdown__label mono">секунды</span>
+          </div>
+        </div>
+
+        <p class="countdown__past" id="countdown-past" hidden>Это случилось</p>
+        <p class="countdown-section__date mono">01 · 11 · 2026</p>
+      </section>
+
+      <section class="details" aria-labelledby="details-title">
+        <div class="details__intro">
+          <h3 class="eyebrow mono" data-reveal>[ детали дня ]</h3>
+          <p class="details__title" id="details-title" data-reveal>
+            Один день.<br /><em>Две локации.</em>
+          </p>
+          <p class="details__note" data-reveal>
+            Фарфор, цветы и немного ноябрьского света. Будем ждать вас — приходите
+            вовремя, чтобы ничего не пропустить.
+          </p>
+        </div>
+
+        <div class="invite-card" data-reveal>
+          <div class="invite-card__head mono">
+            <span>[ программа ]</span>
+            <span>01.11.2026</span>
+          </div>
+
+          <div class="invite-card__lines">
+            <p class="invite-line invite-line--date">01.11</p>
+            <p class="invite-line invite-line--time">15:00</p>
+            <button class="invite-line invite-line--link" type="button" data-place="zags">
+              ЗАГС #1 <span class="invite-line__arrow" aria-hidden="true">↗</span>
+            </button>
+            <p class="invite-line invite-line--time">17:00</p>
+            <p class="invite-line">candy bar</p>
+            <button
+              class="invite-line invite-line--link invite-line--long"
+              type="button"
+              data-place="mansion"
+            >
+              в особняке Василия Хлудова
+              <span class="invite-line__arrow" aria-hidden="true">↗</span>
+            </button>
+            <p class="invite-line invite-line--dress">dress code: серый, please</p>
+
+            <div class="swatches invite-card__swatches" aria-hidden="true">
+              <span class="swatch swatch--1"></span>
+              <span class="swatch swatch--2"></span>
+              <span class="swatch swatch--3"></span>
+              <span class="swatch swatch--4"></span>
+            </div>
+          </div>
+
+          <div class="invite-card__foot mono">
+            <span>[ нажмите на локацию ]</span>
+            <span>↗</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer__top mono">
+          <span>[ мария · максим · 2026 ]</span>
+          <span>с любовью</span>
+        </div>
+        <p class="footer__monogram" aria-hidden="true">М <em>&amp;</em> М</p>
+        <p class="footer__note mono">[ москва · 01.11.2026 ]</p>
+      </footer>
+    </main>
+
+    <div
+      class="modal"
+      id="place-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      aria-hidden="true"
+      inert
+    >
+      <div class="modal__scrim" data-close></div>
+      <div class="modal__panel" role="document">
+        <div class="modal__head">
+          <div class="modal__titles">
+            <p class="mono" id="modal-kicker">[ локация ]</p>
+            <h2 id="modal-title">—</h2>
+          </div>
+          <button class="modal__close" type="button" data-close aria-label="Закрыть карту">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="modal__map-wrap">
+          <div class="modal__map" id="modal-map"></div>
+          <div class="modal__map-shade" aria-hidden="true"></div>
+        </div>
+
+        <div class="modal__foot">
+          <p class="mono" id="modal-coords">—</p>
+          <a
+            class="yandex-link"
+            id="modal-yandex"
+            href="https://yandex.ru/maps"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Открыть в Яндекс.Картах <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+assets/source/
+scripts/renders/
+.playwright-mcp/
+/pigeon_mask_v2.obj
+/plan.md
+/PLAN.md
+/prompt.md
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
