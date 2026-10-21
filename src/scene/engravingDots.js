@@ -13,8 +13,8 @@ function smoothstep(edge0, edge1, value) {
 /**
  * Точки, лежащие прямо на гравировке.
  *
- * Сначала они проявляют буквы, затем мягко разрастаются в силуэт.
- * Цвет — лавандовый из палитры, без жёлтого.
+ * Сначала они проявляют буквы, затем разрастаются в светящееся облако.
+ * Цвет — белый, светящийся; финальный текст поверх — серый.
  */
 export function createEngravingDots() {
   const geometry = new THREE.BufferGeometry();
@@ -25,7 +25,7 @@ export function createEngravingDots() {
 
   const material = new THREE.ShaderMaterial({
     uniforms: {
-      uColor: { value: new THREE.Color('#8b7fa6') },
+      uColor: { value: new THREE.Color('#ffffff') },
       uOpacity: { value: 0 },
       uSize: { value: 2.2 },
       uPixelRatio: { value: 1 },
@@ -46,10 +46,8 @@ export function createEngravingDots() {
 
       void main() {
         vec2 uv = gl_PointCoord - vec2(0.5);
-        float distanceToCenter = length(uv);
-        float core = smoothstep(0.5, 0.12, distanceToCenter);
-        float halo = smoothstep(0.5, 0.0, distanceToCenter) * 0.32;
-        float alpha = max(core, halo) * uOpacity;
+        float distanceToCenter = clamp(length(uv) * 2.0, 0.0, 1.0);
+        float alpha = pow(1.0 - distanceToCenter, 1.35) * uOpacity;
         if (alpha < 0.008) discard;
         gl_FragColor = vec4(uColor, alpha);
       }
@@ -57,7 +55,7 @@ export function createEngravingDots() {
     transparent: true,
     depthWrite: false,
     depthTest: true,
-    blending: THREE.NormalBlending,
+    blending: THREE.AdditiveBlending,
   });
 
   const object = new THREE.Points(geometry, material);
@@ -72,8 +70,8 @@ export function createEngravingDots() {
     const fade = 1 - smoothstep(0.915, 0.975, p);
     const growth = smoothstep(0.62, 0.8, p);
 
-    material.uniforms.uOpacity.value = appear * fade * (0.92 - growth * 0.32);
-    material.uniforms.uSize.value = pixelRatio * (1.5 + growth * 2.6);
+    material.uniforms.uOpacity.value = appear * fade * (0.8 - growth * 0.48);
+    material.uniforms.uSize.value = pixelRatio * (1.7 + growth * 12.0);
     object.visible = material.uniforms.uOpacity.value > 0.002;
   }
 

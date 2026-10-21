@@ -432,17 +432,14 @@ figure {
   font-weight: 300;
   line-height: 1.24;
   letter-spacing: 0.005em;
-  color: #3a3942;
+  color: #5b5b62;
 }
 
 .scene__invite-lines p {
   margin: 0;
   opacity: 0;
   transition: opacity 0.7s var(--ease);
-  text-shadow:
-    0 1px 3px rgba(255, 255, 255, 0.4),
-    0 0 16px rgba(217, 212, 224, 0.95),
-    0 0 36px rgba(201, 204, 211, 0.6);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.36);
 }
 
 .scene__invite-lines p:nth-child(1) {
@@ -470,28 +467,12 @@ figure {
 }
 
 .scene__invite-lines p:nth-child(n + 5) {
-  color: #2f3036;
-  border-bottom: 1px solid rgba(130, 120, 150, 0.58);
-  padding-bottom: 0.1em;
-  text-shadow:
-    0 1px 3px rgba(255, 255, 255, 0.4),
-    0 0 18px rgba(217, 212, 224, 0.98),
-    0 0 40px rgba(201, 204, 211, 0.66);
-}
-
-.scene__invite-lines p:last-child {
-  padding-top: 3.1em;
+  color: #4f4f56;
 }
 
 .scene__invite.is-lit .scene__invite-lines p {
   opacity: 1;
   transition-delay: calc(var(--line-index, 0) * 85ms + 120ms);
-}
-
-@media (min-width: 900px) {
-  .scene__invite-lines {
-    transform: translateY(5.5vh);
-  }
 }
 
 .scene__invite-dress {
