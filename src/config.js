@@ -1,7 +1,7 @@
 export const CONFIG = {
   names: ['МБ', 'МБ'],
   eventDate: '2026-11-01T15:00:00+03:00', // Europe/Moscow
-  invitation: 'Будем рады разделить этот день с вами',
+  invitation: 'на наш праздник',
   dressCode: 'серый, please',
   places: {
     zags: {

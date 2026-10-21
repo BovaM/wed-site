@@ -3,8 +3,7 @@ import { createRenderer, supportsWebGL } from './renderer.js';
 import { createBackground } from './background.js';
 import { createEnvironment } from './environment.js';
 import { loadMask } from './mask.js';
-import { createConstellation } from '../text/constellation.js';
-import { ENGRAVING_POINTS } from '../text/engraving-points.js';
+
 
 /**
  * После разворота модели (Z 180° + X 90°) вертикаль — это локальная Z,
@@ -75,12 +74,10 @@ export function createWeddingScene(canvas) {
   };
 
   let mask = null;
-  let constellation = null;
   let framing = { d0: 6, d1: 4, planeZ: CAMERA_TARGET.z };
   let reconnectFrame = 0;
   let hasFailed = false;
   let animationFrame = 0;
-  let lastDrawingHeight = 0;
   let lastFrameTime = performance.now();
 
   function computeFraming() {
@@ -99,17 +96,9 @@ export function createWeddingScene(canvas) {
     framing = { d0, d1, planeZ: CAMERA_TARGET.z };
   }
 
-  function updateConstellationScale() {
-    if (!constellation) return;
-    const drawingHeight = renderer.domElement.height;
-    const halfFov = THREE.MathUtils.degToRad(FOV / 2);
-    constellation.setSize(drawingHeight / (2 * Math.tan(halfFov)));
-  }
-
   function onResize() {
     controls.resize();
     computeFraming();
-    updateConstellationScale();
   }
 
   computeFraming();
@@ -216,29 +205,12 @@ export function createWeddingScene(canvas) {
   }
 
   function applyText(p) {
-    environment.rake.intensity = smoothstep(0.6, 0.84, p) * 1.2;
-    environment.ambient.intensity = 0.28 - smoothstep(0.55, 0.85, p) * 0.08;
-    renderer.toneMappingExposure = 0.94 - smoothstep(0.6, 0.85, p) * 0.05;
-
-    const gather = smoothstep(0.55, 0.78, p);
-    const stars =
-      smoothstep(0.535, 0.565, p) * (1 - smoothstep(0.62, 0.68, p)) * 0.95;
-    const glowPoints =
-      smoothstep(0.6, 0.67, p) * (1 - smoothstep(0.9, 0.97, p)) * 0.55;
-    const glowLines =
-      smoothstep(0.65, 0.74, p) * (1 - smoothstep(0.9, 0.97, p)) * 0.22;
-
-    if (constellation) {
-      constellation.setReveal({
-        progress: gather,
-        pointOpacity: 0,
-        lineOpacity: 0,
-        starOpacity: stars,
-        glowOpacity: glowPoints,
-        glowLineOpacity: glowLines,
-      });
-      constellation.update(reducedMotion ? 0 : state.time);
-    }
+    const flash =
+      smoothstep(0.52, 0.6, p) * (1 - smoothstep(0.66, 0.76, p));
+    environment.rake.intensity = smoothstep(0.55, 0.74, p) * 1.6 + flash * 1.8;
+    environment.ambient.intensity = 0.28 - smoothstep(0.55, 0.85, p) * 0.1;
+    renderer.toneMappingExposure =
+      0.94 + flash * 0.08 - smoothstep(0.72, 0.86, p) * 0.035;
   }
 
   function renderFrame() {
@@ -264,11 +236,6 @@ export function createWeddingScene(canvas) {
     pointer.sx += (pointer.x - pointer.sx) * (1 - Math.exp(-dt * 4.5));
     pointer.sy += (pointer.y - pointer.sy) * (1 - Math.exp(-dt * 4.5));
 
-    if (renderer.domElement.height !== lastDrawingHeight) {
-      lastDrawingHeight = renderer.domElement.height;
-      updateConstellationScale();
-    }
-
     applyCamera(state.progress);
     applyMaskTransform(state.progress);
     applyText(state.progress);
@@ -284,19 +251,6 @@ export function createWeddingScene(canvas) {
       state.maskLoadedAt = performance.now() / 1000;
       state.maskOpacity = 1;
       state.loaded = true;
-
-      try {
-        constellation = createConstellation(ENGRAVING_POINTS, {
-          renderer,
-          color: '#68666c',
-          threshold: 0.014,
-        });
-        baseGroup.add(constellation.group);
-        updateConstellationScale();
-      } catch (error) {
-        console.error('[text] не удалось собрать рисунок', error);
-      }
-
     } catch (error) {
       console.error('[mask] не удалось загрузить модель', error);
       hasFailed = true;
@@ -325,7 +279,6 @@ export function createWeddingScene(canvas) {
     resizeObserver.disconnect();
     intersectionObserver.disconnect();
     mask?.dispose();
-    constellation?.dispose();
     environment.dispose();
     background.dispose();
     renderer.dispose();
@@ -355,7 +308,6 @@ export function createWeddingScene(canvas) {
       renderer,
       environment,
       getMask: () => mask,
-      getConstellation: () => constellation,
       freeze() {
         state.freeze = true;
         spinGroup.rotation.set(0, Math.PI, 0);

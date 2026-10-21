@@ -1,5 +1,5 @@
-/* ------------------------------------------------------------------
-   Нижняя «галерея»: приглашение, отсчёт, детали, подвал
+﻿/* ------------------------------------------------------------------
+   РќРёР¶РЅСЏСЏ В«РіР°Р»РµСЂРµСЏВ»: РїСЂРёРіР»Р°С€РµРЅРёРµ, РѕС‚СЃС‡С‘С‚, РґРµС‚Р°Р»Рё, РїРѕРґРІР°Р»
    ------------------------------------------------------------------ */
 
 .content {
@@ -57,9 +57,9 @@
   margin-top: clamp(32px, 8vh, 118px);
   font-size: clamp(3.55rem, 15.4vw, 15rem);
   font-weight: 300;
-  font-style: italic;
-  line-height: 0.78;
-  letter-spacing: -0.045em;
+  font-style: normal;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
   white-space: nowrap;
 }
 
@@ -82,19 +82,19 @@
 }
 
 .hero__names em {
-  font-style: italic;
+  font-style: normal;
   font-weight: 300;
   color: var(--muted);
 }
 
 .hero__invitation {
   justify-self: end;
-  max-width: 31ch;
-  font-size: clamp(11px, 1.05vw, 15px);
-  font-weight: 500;
-  line-height: 1.95;
-  letter-spacing: 0.135em;
-  text-align: left;
+  max-width: none;
+  font-size: clamp(15px, 1.35vw, 20px);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.035em;
+  text-align: right;
   color: var(--ink-soft);
 }
 
@@ -167,7 +167,7 @@
   margin-top: clamp(36px, 6vw, 72px);
   font-size: clamp(3rem, 9vw, 8rem);
   font-weight: 300;
-  font-style: italic;
+  font-style: normal;
   line-height: 0.9;
   letter-spacing: -0.03em;
 }
@@ -201,7 +201,7 @@
 }
 
 .details__title em {
-  font-style: italic;
+  font-style: normal;
   font-weight: 300;
   color: var(--ink-soft);
 }
@@ -352,7 +352,7 @@
 .invite-line--dress {
   margin-top: 0.45em;
   font-size: clamp(20px, 2.8vw, 36px);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   color: var(--ink-soft);
 }
@@ -397,7 +397,7 @@
   margin: auto 0;
   font-size: clamp(6rem, 19vw, 18rem);
   font-weight: 300;
-  font-style: italic;
+  font-style: normal;
   line-height: 0.72;
   letter-spacing: -0.07em;
   text-align: center;
@@ -406,7 +406,7 @@
 }
 
 .footer__monogram em {
-  font-style: italic;
+  font-style: normal;
   color: rgba(43, 45, 51, 0.27);
 }
 
@@ -443,9 +443,10 @@
   }
 
   .hero__bottom {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
-    padding-top: clamp(44px, 8vh, 80px);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 16px;
+    padding-top: clamp(36px, 7vh, 70px);
   }
 
   .hero__names {
@@ -453,11 +454,13 @@
   }
 
   .hero__invitation {
-    justify-self: start;
-    max-width: 30ch;
-    font-size: 10px;
-    line-height: 1.9;
-    letter-spacing: 0.115em;
+    justify-self: end;
+    max-width: none;
+    font-size: 13px;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    text-align: right;
+    white-space: nowrap;
   }
 
   .hero__index {
@@ -554,3 +557,4 @@
     font-size: 2.35rem;
   }
 }
+

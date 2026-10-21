@@ -1,5 +1,5 @@
-/* ------------------------------------------------------------------
-   Мария & Максим — базовая типографика, сцена, модалка
+﻿/* ------------------------------------------------------------------
+   РњР°СЂРёСЏ & РњР°РєСЃРёРј вЂ” Р±Р°Р·РѕРІР°СЏ С‚РёРїРѕРіСЂР°С„РёРєР°, СЃС†РµРЅР°, РјРѕРґР°Р»РєР°
    ------------------------------------------------------------------ */
 
 :root {
@@ -15,7 +15,7 @@
   --sand: #ece3dc;
   --silver: #e4e6ea;
   --mist: #c9ccd3;
-  --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --serif: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
   --gutter: clamp(20px, 4.2vw, 64px);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -45,8 +45,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(17px, 1.2vw, 19px);
+  font-weight: 400;
+  font-size: clamp(16px, 1.1vw, 18px);
   line-height: 1.55;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -150,7 +150,7 @@ figure {
 }
 
 /* ------------------------------------------------------------------
-   Сцена с маской
+   РЎС†РµРЅР° СЃ РјР°СЃРєРѕР№
    ------------------------------------------------------------------ */
 
 .scene {
@@ -284,7 +284,7 @@ figure {
 }
 
 .intro-copy__names em {
-  font-style: italic;
+  font-style: normal;
   font-weight: 300;
   color: var(--ink-soft);
 }
@@ -452,9 +452,10 @@ figure {
   border-radius: 50%;
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 253, 248, 1) 0%,
-    rgba(255, 250, 241, 0.99) 68%,
-    rgba(255, 250, 241, 0) 92%
+    rgba(247, 243, 236, 0.99) 0%,
+    rgba(232, 227, 218, 0.95) 60%,
+    rgba(225, 219, 209, 0.4) 84%,
+    rgba(235, 228, 217, 0) 94%
   );
   filter: blur(16px);
 }
@@ -464,29 +465,68 @@ figure {
   z-index: 1;
   text-align: center;
   font-family: var(--serif);
-  font-size: clamp(28px, 5.4vw, 54px);
-  font-weight: 500;
-  line-height: 1.2;
+  font-size: clamp(24px, 4.6vw, 42px);
+  font-weight: 300;
+  line-height: 1.24;
   letter-spacing: 0.005em;
-  color: var(--ink);
-  text-shadow:
-    0 0 24px rgba(255, 239, 201, 0.9),
-    0 1px 0 rgba(255, 255, 255, 0.4);
+  color: #6b5638;
 }
 
 .scene__invite-lines p {
   margin: 0;
+  opacity: 0;
+  transform: translateY(9px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+  text-shadow:
+    0 0 16px rgba(255, 228, 178, 0.95),
+    0 0 36px rgba(255, 215, 158, 0.5);
 }
 
-.scene__invite-gap {
-  height: 0.7em;
+.scene__invite-lines p:nth-child(1) {
+  --line-index: 0;
+}
+
+.scene__invite-lines p:nth-child(2) {
+  --line-index: 1;
+}
+
+.scene__invite-lines p:nth-child(3) {
+  --line-index: 2;
+}
+
+.scene__invite-lines p:nth-child(4) {
+  --line-index: 3;
+}
+
+.scene__invite-lines p:nth-child(5) {
+  --line-index: 4;
+}
+
+.scene__invite-lines p:nth-child(6) {
+  --line-index: 5;
+}
+
+.scene__invite-lines p:nth-child(n + 5) {
+  color: #303136;
+  border-bottom: 1px solid rgba(190, 113, 96, 0.7);
+  padding-bottom: 0.1em;
+  text-shadow:
+    0 0 18px rgba(255, 239, 208, 0.95),
+    0 0 40px rgba(255, 224, 184, 0.55);
+}
+
+.scene__invite.is-lit .scene__invite-lines p {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--line-index, 0) * 85ms + 120ms);
 }
 
 .scene__invite-dress {
-  font-size: clamp(18px, 2.6vw, 30px);
+  font-size: clamp(16px, 2.4vw, 28px);
   font-weight: 400;
-  font-style: italic;
-  color: var(--ink-soft);
+  font-style: normal;
 }
 
 @keyframes invite-breathe {
@@ -516,7 +556,7 @@ figure {
 }
 
 /* ------------------------------------------------------------------
-   Появление при скролле и побуквенный reveal
+   РџРѕСЏРІР»РµРЅРёРµ РїСЂРё СЃРєСЂРѕР»Р»Рµ Рё РїРѕР±СѓРєРІРµРЅРЅС‹Р№ reveal
    ------------------------------------------------------------------ */
 
 [data-reveal] {
@@ -550,7 +590,7 @@ figure {
 }
 
 /* ------------------------------------------------------------------
-   Модалка с картой
+   РњРѕРґР°Р»РєР° СЃ РєР°СЂС‚РѕР№
    ------------------------------------------------------------------ */
 
 .modal {
@@ -742,7 +782,7 @@ figure {
   letter-spacing: 0.06em;
 }
 
-/* OSM-тайлы приводим к светлой галерейной палитре без платного ключа. */
+/* OSM-С‚Р°Р№Р»С‹ РїСЂРёРІРѕРґРёРј Рє СЃРІРµС‚Р»РѕР№ РіР°Р»РµСЂРµР№РЅРѕР№ РїР°Р»РёС‚СЂРµ Р±РµР· РїР»Р°С‚РЅРѕРіРѕ РєР»СЋС‡Р°. */
 .leaflet-tile-pane {
   filter: grayscale(1) brightness(1.08) contrast(0.86) opacity(0.92);
 }
@@ -855,7 +895,7 @@ figure {
 }
 
 /* ------------------------------------------------------------------
-   Мобильная база
+   РњРѕР±РёР»СЊРЅР°СЏ Р±Р°Р·Р°
    ------------------------------------------------------------------ */
 
 @media (min-width: 1100px) {
@@ -935,3 +975,4 @@ figure {
     font-size: 18px;
   }
 }
+

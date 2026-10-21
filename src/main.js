@@ -1,13 +1,9 @@
-import '@fontsource/cormorant-garamond/cyrillic-300.css';
-import '@fontsource/cormorant-garamond/cyrillic-400.css';
-import '@fontsource/cormorant-garamond/cyrillic-500.css';
-import '@fontsource/cormorant-garamond/cyrillic-300-italic.css';
-import '@fontsource/cormorant-garamond/cyrillic-400-italic.css';
-import '@fontsource/cormorant-garamond/latin-300.css';
-import '@fontsource/cormorant-garamond/latin-400.css';
-import '@fontsource/cormorant-garamond/latin-500.css';
-import '@fontsource/cormorant-garamond/latin-300-italic.css';
-import '@fontsource/cormorant-garamond/latin-400-italic.css';
+import '@fontsource/manrope/cyrillic-300.css';
+import '@fontsource/manrope/cyrillic-400.css';
+import '@fontsource/manrope/cyrillic-500.css';
+import '@fontsource/manrope/latin-300.css';
+import '@fontsource/manrope/latin-400.css';
+import '@fontsource/manrope/latin-500.css';
 import '@fontsource/ibm-plex-mono/cyrillic-400.css';
 import '@fontsource/ibm-plex-mono/cyrillic-500.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
@@ -65,10 +61,9 @@ function updateInterface(progress) {
   setOpacity(scrollCue, 1 - smoothstep(0.015, 0.075, p));
   setOpacity(header, 1 - smoothstep(0.82, 0.95, p) * 0.62);
   setOpacity(sceneFade, smoothstep(0.945, 1, p));
-  setOpacity(
-    sceneInvite,
-    smoothstep(0.74, 0.84, p) * (1 - smoothstep(0.95, 1, p)),
-  );
+  const inviteAmount = smoothstep(0.74, 0.84, p) * (1 - smoothstep(0.95, 1, p));
+  setOpacity(sceneInvite, inviteAmount);
+  sceneInvite?.classList.toggle('is-lit', inviteAmount > 0.12);
 
   if (progressValue) {
     progressValue.textContent = String(Math.round(p * 100)).padStart(2, '0');
