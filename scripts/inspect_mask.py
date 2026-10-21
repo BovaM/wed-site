@@ -18,7 +18,7 @@ def look_at(camera, target):
 
 bpy.ops.object.select_all(action="SELECT")
 bpy.ops.object.delete(use_global=False)
-bpy.ops.import_scene.gltf(filepath=str(ROOT / "public" / "models" / "mask.glb"))
+bpy.ops.import_scene.gltf(filepath=str(ROOT / "public" / "models" / "mask-v3.glb"))
 meshes = [o for o in bpy.context.selected_objects if o.type == "MESH"]
 obj = meshes[0]
 print("DIM", tuple(round(v, 3) for v in obj.dimensions))

@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { createPorcelainMaterial } from './material.js';
 
-const MODEL_URL = `${import.meta.env.BASE_URL}models/mask.glb`;
+const MODEL_URL = `${import.meta.env.BASE_URL}models/mask-v3.glb`;
 const DECODER_URL = `${import.meta.env.BASE_URL}draco/`;
 
 export function loadMask({ onProgress } = {}) {

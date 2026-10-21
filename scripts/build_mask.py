@@ -4,7 +4,7 @@
     blender --background --factory-startup --python scripts/build_mask.py
 
 Результат:
-    public/models/mask.glb
+    public/models/mask-v3.glb
     scripts/renders/mask-{front,back,side,three-quarter}.png
     scripts/renders/stats.json
 """
@@ -21,8 +21,8 @@ import bmesh
 from mathutils import Matrix, Vector
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "assets" / "source" / "pigeon_mask_v2.obj"
-OUT_GLB = ROOT / "public" / "models" / "mask.glb"
+SOURCE = ROOT / "assets" / "source" / "pigeon_mask_v3.obj"
+OUT_GLB = ROOT / "public" / "models" / "mask-v3.glb"
 RENDERS = ROOT / "scripts" / "renders"
 
 TARGET_TRIS = 300_000

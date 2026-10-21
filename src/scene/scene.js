@@ -3,6 +3,7 @@ import { createRenderer, supportsWebGL } from './renderer.js';
 import { createBackground } from './background.js';
 import { createEnvironment } from './environment.js';
 import { loadMask } from './mask.js';
+import { createEngravingDots } from './engravingDots.js';
 
 
 /**
@@ -57,8 +58,9 @@ export function createWeddingScene(canvas) {
   spinGroup.add(baseGroup);
   scene.add(spinGroup);
 
-  const debugRaycaster = new THREE.Raycaster();
-  const debugNdc = new THREE.Vector2();
+  const engravingDots = createEngravingDots();
+  engravingDots.setPixelRatio(renderer.getPixelRatio());
+  baseGroup.add(engravingDots.object);
 
   const pointer = { x: 0, y: 0, sx: 0, sy: 0 };
   const state = {
@@ -99,6 +101,7 @@ export function createWeddingScene(canvas) {
   function onResize() {
     controls.resize();
     computeFraming();
+    engravingDots.setPixelRatio(renderer.getPixelRatio());
   }
 
   computeFraming();
@@ -211,6 +214,7 @@ export function createWeddingScene(canvas) {
     environment.ambient.intensity = 0.28 - smoothstep(0.55, 0.85, p) * 0.1;
     renderer.toneMappingExposure =
       0.94 + flash * 0.08 - smoothstep(0.72, 0.86, p) * 0.035;
+    engravingDots.setProgress(p);
   }
 
   function renderFrame() {
@@ -279,6 +283,7 @@ export function createWeddingScene(canvas) {
     resizeObserver.disconnect();
     intersectionObserver.disconnect();
     mask?.dispose();
+    engravingDots.dispose();
     environment.dispose();
     background.dispose();
     renderer.dispose();
@@ -313,40 +318,6 @@ export function createWeddingScene(canvas) {
         spinGroup.rotation.set(0, Math.PI, 0);
         spinGroup.position.set(0, 0, 0);
         spinGroup.updateMatrixWorld(true);
-      },
-      localPointsFromScreen(screenPoints) {
-        if (!mask || !screenPoints?.length) return [];
-        const canvasRect = canvas.getBoundingClientRect();
-        const result = [];
-        for (const [x, y] of screenPoints) {
-          debugNdc.set(
-            (x / canvasRect.width) * 2 - 1,
-            -(y / canvasRect.height) * 2 + 1,
-          );
-          debugRaycaster.setFromCamera(debugNdc, camera);
-          mask.mesh.updateWorldMatrix(true, false);
-          const hit = debugRaycaster.intersectObject(mask.mesh, false)[0];
-          if (!hit) continue;
-          const point = hit.point.clone();
-          point.z -= 0.003;
-          baseGroup.worldToLocal(point);
-          result.push([point.x, point.y, point.z]);
-        }
-        return result;
-      },
-      pick(ndcX, ndcY) {
-        if (!mask) return null;
-        debugNdc.set(ndcX, ndcY);
-        debugRaycaster.setFromCamera(debugNdc, camera);
-        mask.mesh.updateWorldMatrix(true, false);
-        return debugRaycaster.intersectObject(mask.mesh, false).map((hit) => {
-          const local = mask.mesh.worldToLocal(hit.point.clone());
-          return {
-            world: hit.point.toArray(),
-            local: local.toArray(),
-            distance: hit.distance,
-          };
-        });
       },
     },
   };

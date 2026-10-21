@@ -4,6 +4,8 @@ assets/source/
 scripts/renders/
 .playwright-mcp/
 /pigeon_mask_v2.obj
+/pigeon_mask_v3.obj
+/pigeon_mask_v7.stl
 /plan.md
 /PLAN.md
 /prompt.md
