@@ -11,13 +11,6 @@ export const CONFIG = {
       yandexUrl:
         'https://yandex.ru/maps/org/dvorets_brakosochetaniya_1/1241193732/?ll=37.644818%2C55.765975&z=16',
     },
-    mansion: {
-      name: 'Особняк Василия Хлудова',
-      lat: 55.769884,
-      lng: 37.659668,
-      yandexUrl:
-        'https://yandex.ru/maps/org/21_kult/126234753565/?ll=37.659668%2C55.769884&z=16.75',
-    },
   },
 };
 

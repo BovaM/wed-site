@@ -34,6 +34,7 @@ const captionIndex = document.getElementById('scene-caption-index');
 const captionText = document.getElementById('scene-caption-text');
 const sceneEnd = document.getElementById('scene-end');
 const sceneFade = document.getElementById('scene-fade');
+const sceneInvite = document.getElementById('scene-invite');
 const header = document.querySelector('.scene__header');
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -63,7 +64,11 @@ function updateInterface(progress) {
 
   setOpacity(scrollCue, 1 - smoothstep(0.015, 0.075, p));
   setOpacity(header, 1 - smoothstep(0.82, 0.95, p) * 0.62);
-  setOpacity(sceneFade, smoothstep(0.935, 1, p));
+  setOpacity(sceneFade, smoothstep(0.945, 1, p));
+  setOpacity(
+    sceneInvite,
+    smoothstep(0.74, 0.84, p) * (1 - smoothstep(0.95, 1, p)),
+  );
 
   if (progressValue) {
     progressValue.textContent = String(Math.round(p * 100)).padStart(2, '0');
