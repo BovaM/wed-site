@@ -41,7 +41,12 @@ await page.waitForTimeout(wait);
 for (const position of positions) {
   await page.evaluate((progress) => {
     const max = document.getElementById('scene-track').offsetHeight - window.innerHeight;
-    window.__wedding.scroll.lenis.scrollTo(max * progress, { immediate: true, force: true });
+    const lenis = window.__wedding?.scroll?.lenis;
+    if (lenis) {
+      lenis.scrollTo(max * progress, { immediate: true, force: true });
+    } else {
+      window.scrollTo(0, max * progress);
+    }
   }, position);
   await page.waitForTimeout(1000);
   const name = `scripts/renders/${tag}-${width}-${Math.round(position * 100)}.png`;
