@@ -71,8 +71,8 @@ export function createEngravingDots() {
     const growth = smoothstep(0.62, 0.8, p);
 
     material.uniforms.uOpacity.value = appear * fade * (0.8 - growth * 0.48);
-    // Исходный размер точки 1.7; к финалу облако вырастает ровно в 5 раз.
-    material.uniforms.uSize.value = pixelRatio * (1.7 + growth * 6.8);
+    // Исходный размер точки 1.7; к финалу облако вырастает ровно в 20 раз.
+    material.uniforms.uSize.value = pixelRatio * (1.7 + growth * 32.3);
     object.visible = material.uniforms.uOpacity.value > 0.002;
   }
 

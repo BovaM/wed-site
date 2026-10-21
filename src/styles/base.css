@@ -474,6 +474,10 @@ figure {
   --line-index: 7;
 }
 
+.scene__invite-lines p:nth-child(9) {
+  --line-index: 8;
+}
+
 .scene__invite-gap {
   visibility: hidden;
 }

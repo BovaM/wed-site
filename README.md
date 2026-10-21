@@ -86,6 +86,7 @@ scripts/
   build_mask.py          Blender headless: OBJ → GLB
   export_bake_glb.py     Blender: GLB без Draco для запекания
   bake-engraving-offline.mjs точки гравировки через BVH
+  shot.mjs              быстрые скриншоты сцены на любом прогрессе
   make-images.mjs        webp/og-изображения
 ```
 
