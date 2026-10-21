@@ -48,6 +48,102 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
+const starVertexShader = /* glsl */ `
+  uniform float uProgress;
+  uniform float uTime;
+  uniform float uScale;
+  uniform float uOpacity;
+  uniform float uStarSize;
+
+  attribute vec3 aStart;
+  attribute vec3 aTarget;
+  attribute float aSize;
+  attribute float aSeed;
+  attribute float aDelay;
+
+  varying float vAlpha;
+
+  void main() {
+    float t = clamp((uProgress - aDelay * 0.36) / 0.64, 0.0, 1.0);
+    t = t * t * (3.0 - 2.0 * t);
+
+    vec3 position = mix(aStart, aTarget, t);
+    float drift = 1.0 - t;
+    position.x += sin(uTime * 0.65 + aSeed * 6.2831) * 0.035 * drift;
+    position.y += cos(uTime * 0.52 + aSeed * 4.71) * 0.03 * drift;
+    position.z += sin(uTime * 0.9 + aSeed * 3.17) * 0.02 * drift;
+
+    vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_PointSize = aSize * uStarSize * uScale / max(0.2, -viewPosition.z);
+    gl_Position = projectionMatrix * viewPosition;
+
+    float twinkle = 0.58 + 0.42 * sin(uTime * 2.4 + aSeed * 20.0);
+    float appear = smoothstep(aDelay * 0.25, aDelay * 0.25 + 0.18, uProgress);
+    vAlpha = appear * uOpacity * twinkle * step(0.5, aSeed);
+  }
+`;
+
+const starFragmentShader = /* glsl */ `
+  precision highp float;
+
+  uniform vec3 uColor;
+  varying float vAlpha;
+
+  void main() {
+    vec2 point = gl_PointCoord - vec2(0.5);
+    float distanceToCenter = length(point);
+    if (distanceToCenter > 0.5) discard;
+    float core = smoothstep(0.5, 0.04, distanceToCenter);
+    float halo = pow(max(0.0, 1.0 - distanceToCenter * 2.0), 2.2);
+    float alpha = (core * 0.8 + halo * 0.34) * vAlpha;
+    gl_FragColor = vec4(uColor, alpha);
+    #include <colorspace_fragment>
+  }
+`;
+
+const glowVertexShader = /* glsl */ `
+  uniform float uProgress;
+  uniform float uTime;
+  uniform float uScale;
+  uniform float uOpacity;
+  uniform float uSize;
+
+  attribute vec3 aStart;
+  attribute vec3 aTarget;
+  attribute float aSize;
+  attribute float aSeed;
+
+  varying float vAlpha;
+
+  void main() {
+    float t = clamp(uProgress, 0.0, 1.0);
+    t = t * t * (3.0 - 2.0 * t);
+    vec3 position = mix(aStart, aTarget, t);
+    vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_PointSize = aSize * uSize * uScale / max(0.2, -viewPosition.z);
+    gl_Position = projectionMatrix * viewPosition;
+    vAlpha = uOpacity * (0.86 + 0.14 * sin(uTime * 1.3 + aSeed * 6.2831));
+  }
+`;
+
+const glowFragmentShader = /* glsl */ `
+  precision highp float;
+
+  uniform vec3 uColor;
+  varying float vAlpha;
+
+  void main() {
+    vec2 point = gl_PointCoord - vec2(0.5);
+    float distanceToCenter = length(point);
+    if (distanceToCenter > 0.5) discard;
+    float halo = pow(max(0.0, 1.0 - distanceToCenter * 2.0), 1.8);
+    float core = smoothstep(0.5, 0.02, distanceToCenter);
+    float alpha = (halo * 0.55 + core * 0.28) * vAlpha;
+    gl_FragColor = vec4(uColor, alpha * 0.72);
+    #include <colorspace_fragment>
+  }
+`;
+
 function mulberry32(seed) {
   let value = seed >>> 0;
   return function random() {
@@ -180,6 +276,56 @@ export function createConstellation(
   pointsObject.renderOrder = 4;
   pointsObject.visible = false;
 
+  const starUniforms = {
+    uProgress: { value: 0 },
+    uTime: { value: 0 },
+    uScale: { value: 1000 },
+    uOpacity: { value: 0 },
+    uColor: { value: new THREE.Color('#ffe4b5') },
+    uStarSize: { value: 3.4 },
+  };
+
+  const starMaterial = new THREE.ShaderMaterial({
+    vertexShader: starVertexShader,
+    fragmentShader: starFragmentShader,
+    uniforms: starUniforms,
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+    toneMapped: false,
+    blending: THREE.AdditiveBlending,
+  });
+
+  const starsObject = new THREE.Points(geometry, starMaterial);
+  starsObject.frustumCulled = false;
+  starsObject.renderOrder = 2;
+  starsObject.visible = false;
+
+  const glowUniforms = {
+    uProgress: { value: 0 },
+    uTime: { value: 0 },
+    uScale: { value: 1000 },
+    uOpacity: { value: 0 },
+    uColor: { value: new THREE.Color('#ffe9c6') },
+    uSize: { value: 3.2 },
+  };
+
+  const glowMaterial = new THREE.ShaderMaterial({
+    vertexShader: glowVertexShader,
+    fragmentShader: glowFragmentShader,
+    uniforms: glowUniforms,
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+    toneMapped: false,
+    blending: THREE.AdditiveBlending,
+  });
+
+  const glowPointsObject = new THREE.Points(geometry, glowMaterial);
+  glowPointsObject.frustumCulled = false;
+  glowPointsObject.renderOrder = 6;
+  glowPointsObject.visible = false;
+
   const segments = buildSegments(points, threshold);
   const lineGeometry = new THREE.BufferGeometry();
   const linePositions = new Float32Array(segments.length * 3);
@@ -204,36 +350,82 @@ export function createConstellation(
   linesObject.renderOrder = 3;
   linesObject.visible = false;
 
+  const glowLineMaterial = new THREE.LineBasicMaterial({
+    color: new THREE.Color('#ffdfae'),
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+    depthTest: false,
+    toneMapped: false,
+    blending: THREE.AdditiveBlending,
+  });
+  const glowLinesObject = new THREE.LineSegments(lineGeometry, glowLineMaterial);
+  glowLinesObject.frustumCulled = false;
+  glowLinesObject.renderOrder = 5;
+  glowLinesObject.visible = false;
+
   const group = new THREE.Group();
-  group.add(linesObject, pointsObject);
+  group.add(
+    linesObject,
+    starsObject,
+    pointsObject,
+    glowLinesObject,
+    glowPointsObject,
+  );
 
   function setSize(viewHeight) {
     uniforms.uScale.value = viewHeight;
+    starUniforms.uScale.value = viewHeight;
+    glowUniforms.uScale.value = viewHeight;
   }
 
   function update(time) {
     uniforms.uTime.value = time;
+    starUniforms.uTime.value = time;
+    glowUniforms.uTime.value = time;
   }
 
-  function setReveal({ progress = 0, pointOpacity = 0, lineOpacity = 0 }) {
-    uniforms.uProgress.value = THREE.MathUtils.clamp(progress, 0, 1);
+  function setReveal({
+    progress = 0,
+    pointOpacity = 0,
+    lineOpacity = 0,
+    starOpacity = 0,
+    glowOpacity = 0,
+    glowLineOpacity = 0,
+  }) {
+    const clampedProgress = THREE.MathUtils.clamp(progress, 0, 1);
+    uniforms.uProgress.value = clampedProgress;
+    starUniforms.uProgress.value = clampedProgress;
+    glowUniforms.uProgress.value = clampedProgress;
     uniforms.uOpacity.value = THREE.MathUtils.clamp(pointOpacity, 0, 1);
+    starUniforms.uOpacity.value = THREE.MathUtils.clamp(starOpacity, 0, 1);
+    glowUniforms.uOpacity.value = THREE.MathUtils.clamp(glowOpacity, 0, 1);
     lineMaterial.opacity = THREE.MathUtils.clamp(lineOpacity, 0, 0.75);
+    glowLineMaterial.opacity = THREE.MathUtils.clamp(glowLineOpacity, 0, 0.75);
     pointsObject.visible = uniforms.uOpacity.value > 0.002;
+    starsObject.visible = starUniforms.uOpacity.value > 0.002;
+    glowPointsObject.visible = glowUniforms.uOpacity.value > 0.002;
     linesObject.visible = lineMaterial.opacity > 0.002;
+    glowLinesObject.visible = glowLineMaterial.opacity > 0.002;
   }
 
   function dispose() {
     geometry.dispose();
     lineGeometry.dispose();
     pointMaterial.dispose();
+    starMaterial.dispose();
+    glowMaterial.dispose();
     lineMaterial.dispose();
+    glowLineMaterial.dispose();
   }
 
   return {
     group,
     pointsObject,
+    starsObject,
+    glowPointsObject,
     linesObject,
+    glowLinesObject,
     segmentCount: segments.length / 2,
     setSize,
     setReveal,

@@ -220,16 +220,27 @@ export function createWeddingScene(canvas) {
     environment.ambient.intensity = 0.28 - smoothstep(0.55, 0.85, p) * 0.08;
     renderer.toneMappingExposure = 0.94 - smoothstep(0.6, 0.85, p) * 0.05;
 
-    if (!constellation) return;
-
     const gather = smoothstep(0.55, 0.78, p);
-    const appear = smoothstep(0.55, 0.62, p);
-    const handoff = smoothstep(0.72, 0.8, p);
-    const pointOpacity = appear * (0.6 - handoff * 0.36);
-    const lineOpacity = smoothstep(0.64, 0.77, p) * 0.32 * (1 - handoff);
+    const stars =
+      smoothstep(0.535, 0.565, p) * (1 - smoothstep(0.62, 0.68, p)) * 1.0;
+    const points =
+      smoothstep(0.61, 0.67, p) * (1 - smoothstep(0.73, 0.8, p)) * 0.62;
+    const lines =
+      smoothstep(0.66, 0.75, p) * (1 - smoothstep(0.73, 0.8, p)) * 0.34;
+    const glow = smoothstep(0.74, 0.84, p) * 0.34;
+    const glowLines = smoothstep(0.74, 0.86, p) * 0.12;
 
-    constellation.setReveal({ progress: gather, pointOpacity, lineOpacity });
-    constellation.update(reducedMotion ? 0 : state.time);
+    if (constellation) {
+      constellation.setReveal({
+        progress: gather,
+        pointOpacity: points,
+        lineOpacity: lines,
+        starOpacity: stars,
+        glowOpacity: glow,
+        glowLineOpacity: glowLines,
+      });
+      constellation.update(reducedMotion ? 0 : state.time);
+    }
   }
 
   function renderFrame() {
@@ -267,6 +278,7 @@ export function createWeddingScene(canvas) {
     controls.samplePerformance(dt);
   }
 
+
   const ready = (async () => {
     try {
       mask = await loadMask({});
@@ -286,6 +298,7 @@ export function createWeddingScene(canvas) {
       } catch (error) {
         console.error('[text] не удалось собрать рисунок', error);
       }
+
     } catch (error) {
       console.error('[mask] не удалось загрузить модель', error);
       hasFailed = true;
