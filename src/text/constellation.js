@@ -307,7 +307,7 @@ export function createConstellation(
     uScale: { value: 1000 },
     uOpacity: { value: 0 },
     uColor: { value: new THREE.Color('#ffe9c6') },
-    uSize: { value: 3.2 },
+    uSize: { value: 4.2 },
   };
 
   const glowMaterial = new THREE.ShaderMaterial({

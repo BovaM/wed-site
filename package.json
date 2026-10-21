@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Свадебное приглашение Марии и Максима — scroll-driven 3D",
+  "description": "Свадебное приглашение — scroll-driven 3D",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

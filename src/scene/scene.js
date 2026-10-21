@@ -222,21 +222,19 @@ export function createWeddingScene(canvas) {
 
     const gather = smoothstep(0.55, 0.78, p);
     const stars =
-      smoothstep(0.535, 0.565, p) * (1 - smoothstep(0.62, 0.68, p)) * 1.0;
-    const points =
-      smoothstep(0.61, 0.67, p) * (1 - smoothstep(0.73, 0.8, p)) * 0.62;
-    const lines =
-      smoothstep(0.66, 0.75, p) * (1 - smoothstep(0.73, 0.8, p)) * 0.34;
-    const glow = smoothstep(0.74, 0.84, p) * 0.34;
-    const glowLines = smoothstep(0.74, 0.86, p) * 0.12;
+      smoothstep(0.535, 0.565, p) * (1 - smoothstep(0.62, 0.68, p)) * 0.95;
+    const glowPoints =
+      smoothstep(0.6, 0.67, p) * (1 - smoothstep(0.9, 0.97, p)) * 0.55;
+    const glowLines =
+      smoothstep(0.65, 0.74, p) * (1 - smoothstep(0.9, 0.97, p)) * 0.22;
 
     if (constellation) {
       constellation.setReveal({
         progress: gather,
-        pointOpacity: points,
-        lineOpacity: lines,
+        pointOpacity: 0,
+        lineOpacity: 0,
         starOpacity: stars,
-        glowOpacity: glow,
+        glowOpacity: glowPoints,
         glowLineOpacity: glowLines,
       });
       constellation.update(reducedMotion ? 0 : state.time);
