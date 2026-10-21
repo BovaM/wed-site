@@ -466,6 +466,18 @@ figure {
   --line-index: 5;
 }
 
+.scene__invite-lines p:nth-child(7) {
+  --line-index: 6;
+}
+
+.scene__invite-lines p:nth-child(8) {
+  --line-index: 7;
+}
+
+.scene__invite-gap {
+  visibility: hidden;
+}
+
 .scene__invite-lines p:nth-child(n + 5) {
   color: #4f4f56;
 }

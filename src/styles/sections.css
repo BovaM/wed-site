@@ -66,11 +66,11 @@
 .hero__subtitle {
   position: relative;
   z-index: 1;
-  margin-top: clamp(22px, 3.2vh, 46px);
-  font-size: clamp(15px, 1.45vw, 21px);
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.025em;
+  margin: 0;
+  font-size: clamp(2.1rem, 5vw, 5.4rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
   color: var(--ink-soft);
 }
 
@@ -80,7 +80,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: end;
-  gap: clamp(24px, 6vw, 100px);
+  gap: clamp(18px, 2.6vh, 30px);
   margin-top: auto;
   padding-top: clamp(54px, 11vh, 140px);
 }
@@ -443,9 +443,9 @@
   }
 
   .hero__bottom {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     align-items: end;
-    gap: 16px;
+    gap: 14px;
     padding-top: clamp(36px, 7vh, 70px);
   }
 
@@ -454,8 +454,8 @@
   }
 
   .hero__subtitle {
-    margin-top: 14px;
-    font-size: 15px;
+    margin: 0;
+    font-size: clamp(2.4rem, 11vw, 3.8rem);
   }
 
   .hero__index {
