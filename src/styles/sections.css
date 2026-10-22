@@ -66,11 +66,11 @@
 .hero__subtitle {
   position: relative;
   z-index: 1;
-  margin: 0;
+  margin: clamp(6px, 1.1vh, 16px) 0 0;
   font-size: clamp(2.1rem, 5vw, 5.4rem);
-  font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: -0.025em;
+  font-weight: 200;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
   color: var(--ink-soft);
 }
 
@@ -303,7 +303,7 @@
 .invite-line {
   max-width: 100%;
   font-size: clamp(34px, 5.2vw, 72px);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.17;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -454,8 +454,8 @@
   }
 
   .hero__subtitle {
-    margin: 0;
-    font-size: clamp(2.4rem, 11vw, 3.8rem);
+    margin: 8px 0 0;
+    font-size: clamp(2.1rem, 10.4vw, 3.4rem);
   }
 
   .hero__index {

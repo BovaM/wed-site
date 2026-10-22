@@ -50,9 +50,25 @@ for (const position of positions) {
   }, position);
   await page.waitForTimeout(1000);
   const name = `scripts/renders/${tag}-${width}-${Math.round(position * 100)}.png`;
-  await page.screenshot({ path: name, scale: 'css', type: 'png' });
+  await page.screenshot({ path: name, scale: 'css', type: 'png', timeout: 90000 });
   console.log('saved', name);
 }
 
 console.log('errors:', JSON.stringify(errors));
+
+if (args.scroll) {
+  await page.evaluate((selector) => {
+    const target = document.querySelector(selector);
+    if (!target) return;
+    const top = target.getBoundingClientRect().top + window.scrollY;
+    const lenis = window.__wedding?.scroll?.lenis;
+    if (lenis) lenis.scrollTo(top, { immediate: true, force: true });
+    else window.scrollTo(0, top);
+  }, args.scroll);
+  await page.waitForTimeout(1200);
+  const name = `scripts/renders/${tag}-${width}-${args.scroll.replace(/[^a-z0-9]+/gi, '-')}.png`;
+  await page.screenshot({ path: name, scale: 'css', type: 'png', timeout: 90000 });
+  console.log('saved', name);
+}
+
 await browser.close();

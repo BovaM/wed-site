@@ -15,7 +15,7 @@
   --sand: #ece3dc;
   --silver: #e4e6ea;
   --mist: #c9ccd3;
-  --serif: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+  --serif: 'Unbounded Variable', 'Unbounded', 'Helvetica Neue', Arial, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
   --gutter: clamp(20px, 4.2vw, 64px);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -711,7 +711,7 @@ figure {
   color: var(--ink);
   font-family: var(--serif);
   font-size: clamp(16px, 1.4vw, 19px);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.2;
   transition: border-color 0.3s var(--ease);
 }
