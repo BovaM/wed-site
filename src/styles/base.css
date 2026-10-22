@@ -755,6 +755,11 @@ figure {
   color: var(--ink-soft) !important;
 }
 
+/* Leaflet 1.9.4 рисует украинский флаг в атрибуции — он нам не нужен. */
+.leaflet-attribution-flag {
+  display: none !important;
+}
+
 .leaflet-bar {
   border: 1px solid var(--line) !important;
   box-shadow: none !important;

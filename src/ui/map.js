@@ -42,10 +42,17 @@ export function initMapModal({ onOpen, onClose } = {}) {
       map = leaflet.map(mapElement, {
         zoomControl: true,
         scrollWheelZoom: true,
-        attributionControl: true,
+        attributionControl: false,
         zoomSnap: 0.25,
         preferCanvas: true,
       });
+
+      // Leaflet 1.9.4 вшивает украинский флаг в префикс атрибуции.
+      // Оставляем только атрибуцию тайлов OpenStreetMap.
+      leaflet.control.attribution({ prefix: false }).addTo(map);
+      mapElement
+        .querySelectorAll('.leaflet-attribution-flag')
+        .forEach((node) => node.remove());
 
       leaflet
         .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

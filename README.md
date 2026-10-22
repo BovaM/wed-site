@@ -87,6 +87,7 @@ scripts/
   export_bake_glb.py     Blender: GLB без Draco для запекания
   bake-engraving-offline.mjs точки гравировки через BVH
   shot.mjs              быстрые скриншоты сцены на любом прогрессе
+  shot-map.mjs          скриншот модалки с картой
   make-images.mjs        webp/og-изображения
 ```
 
